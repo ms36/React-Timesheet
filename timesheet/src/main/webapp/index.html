@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="style.css" rel="stylesheet" type="text/css">
+<title>TimeSheet-Portal</title>
+</head>
+	<body>
+		<style>
+			
+		</style>
+		<p id="pagetitle">Time Sheet</p>
+		<form id="loginForm">
+			<p id="logintitle">Login</p>
+			<label>Username</label><br><br>
+			<input type="text" name="username" required maxlength="16" /> <br />
+			<br /> <label>Password</label><br><br>
+			<input type="password" name="password" required maxlength="16" /> <br />
+			<br />
+			<button id="loginbutton" type="submit">Login</button>
+		</form>
+	<p id="welcomeMessage"></p>
+		
+		<br><br>
+		<table id='timesheetTable'>
+			<thead>
+				<tr>
+					<th scope="col">Monday</th>
+					<th scope="col">Tuesday</th>
+					<th scope="col">Wednesday</th>
+					<th scope="col">Thursday</th>
+					<th scope="col">Friday</th>
+					<th scope="col">Saturday</th>
+					<th scope="col">Sunday</th>
+					<th scope="col">Total Hours</th>
+					<th scope="col">Week Ending</th>
+				</tr>
+			</thead>
+		</table>
+		<button id="saveButton"> Save </button>
+		<button id="submitButton">Submit</button>
+		<button id="loginOutButton">Login</button>
+
+		<script src='script.js'></script>
+		<script src="https://unpkg.com/axios@0.19.0/dist/axios.min.js"></script>
+	</body>
+</html>

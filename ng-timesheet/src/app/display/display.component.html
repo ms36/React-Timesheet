@@ -1,0 +1,113 @@
+<!-- Navbar -->
+<nav class="navbar">
+  <a class="skillstorm_image" href="#skillstorm"><img src="/assets/skillstorm_image.jpg"/></a>
+  <div class="collapse navbar-collapse show home-navbar" id="navbarText"></div>
+</nav>
+<div class="main">
+  <div class="border" *ngFor="let timesheet of timesheets; let i = index">
+    <!------------------------ Simplified Timesheet view --------------------------------->
+    <table *ngIf="isTimesheetMinimized[i]; else elseBlock" (dblclick)="toggleTimesheetDetail(i)">
+      <thead>
+        <tr class="title-bar">
+          <th>{{timesheet.weekEndingDate}}</th>
+          <th></th>
+          <th></th>
+          <th  *ngIf="!isTimesheetSubmitted[i]; else elseBlock2 "class="not-submitted" colspan="2">Not Submitted</th>
+          <ng-template #elseBlock2>
+            <th colspan="2"></th>
+          </ng-template>
+          <th></th>
+          <th></th>
+
+          <th><button class="button-maximize" (click)="toggleTimesheetDetail(i)">[_]</button></th>
+        </tr>
+        <tr class="row-description">
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
+          <th>Total Hours</th>
+        </tr>
+      </thead>
+        <tr class="row-total">
+          <td>{{this.timesheetHours[i].totalHoursWorked[0]}}</td>
+          <td>{{this.timesheetHours[i].totalHoursWorked[1]}}</td>
+          <td>{{this.timesheetHours[i].totalHoursWorked[2]}}</td>
+          <td>{{this.timesheetHours[i].totalHoursWorked[3]}}</td>
+          <td>{{this.timesheetHours[i].totalHoursWorked[4]}}</td>
+          <td>{{this.timesheetHours[i].totalHoursWorked[5]}}</td>
+          <td>{{this.timesheetHours[i].totalHoursWorked[6]}}</td>
+          <td>{{this.timesheetHours[i].totalHoursWorked[7]}}</td>
+        </tr>
+    </table>
+    <br>
+  <ng-template #elseBlock>
+    <!----------------------------------- Detailed Timesheet view -------------------------------->
+    <table class="table-detailed" (dblclick)="toggleTimesheetDetail(i)">
+      <thead>
+        <tr class="title-bar">
+          <th>{{timesheet.weekEndingDate}}</th>
+          <th><button *ngIf="!isTimesheetSubmitted[i]" class="button-save" (click)="saveTimesheet(timesheet, 1, i)" >Save</button></th>
+          <th><button *ngIf="this.isTimesheetSaved[i]" class="button-submit"(click)="submitTimesheet(timesheet, 1, i)" >Submit</button></th>
+          <th *ngIf="!isTimesheetSubmitted[i]; else elseBlock2 "class="not-submitted" colspan="2">Not Submitted</th>
+          <ng-template #elseBlock2>
+            <th colspan="2"></th>
+          </ng-template>
+          <th></th>
+          <th><button *ngIf="!isTimesheetSubmitted[i]" class="button-save" (click)="setHoursWithPreviousTimesheet(i)" >Repeat</button></th>
+          <th><button class="button-minimize" (click)="toggleTimesheetDetail(i)">---</button></th>
+        </tr>
+        <tr class="row-description">
+          <th></th>
+          <th>Log In</th>
+          <th>Log Out</th>
+          <th>Log In</th>
+          <th>Log Out</th>
+          <th>Log In</th>
+          <th>Log Out</th>
+          <th>Total Hours</th>
+        </tr>
+      </thead>
+      <!-- Enable input when timesheet has not been submitted -->
+      <ng-container *ngIf="!isTimesheetSubmitted[i]; else elseBlock1">
+        <tr class="row-input" *ngFor="let day of timesheet.dayOfWeeks; let d = index">
+          <td>{{day.name}}</td>
+          <td><input type="time" (change)="calculateHoursInADay(i, d)" [(ngModel)]="timesheet.dayOfWeeks[d].logInOuts[0].logIn" value={{day.logInOuts[0].logIn}}></td>
+          <td><input type="time" (change)="calculateHoursInADay(i, d)" [(ngModel)]="timesheet.dayOfWeeks[d].logInOuts[0].logOut" value={{day.logInOuts[0].logOut}}></td>
+          <td><input type="time" (change)="calculateHoursInADay(i, d)" [(ngModel)]="timesheet.dayOfWeeks[d].logInOuts[1].logIn" value={{day.logInOuts[1].logIn}}></td>
+          <td><input type="time" (change)="calculateHoursInADay(i, d)" [(ngModel)]="timesheet.dayOfWeeks[d].logInOuts[1].logOut" value={{day.logInOuts[1].logOut}}></td>
+          <td><input type="time" (change)="calculateHoursInADay(i, d)" [(ngModel)]="timesheet.dayOfWeeks[d].logInOuts[2].logIn" value={{day.logInOuts[2].logIn}}></td>
+          <td><input type="time" (change)="calculateHoursInADay(i, d)" [(ngModel)]="timesheet.dayOfWeeks[d].logInOuts[2].logOut" value={{day.logInOuts[2].logOut}}></td>
+          <td>{{this.timesheetHours[i].totalHoursWorked[d]}}</td>
+        </tr>
+      </ng-container>
+      <!-- Disable input when timesheet has been submitted -->
+      <ng-template #elseBlock1>
+        <tr class="row-no-input" *ngFor="let day of timesheet.dayOfWeeks; let d = index">
+          <td>{{day.name}}</td>
+          <td>{{timesheet.dayOfWeeks[d].logInOuts[0].logIn}}</td>
+          <td>{{timesheet.dayOfWeeks[d].logInOuts[0].logOut}}</td>
+          <td>{{timesheet.dayOfWeeks[d].logInOuts[1].logIn}}</td>
+          <td>{{timesheet.dayOfWeeks[d].logInOuts[1].logOut}}</td>
+          <td>{{timesheet.dayOfWeeks[d].logInOuts[2].logIn}}</td>
+          <td>{{timesheet.dayOfWeeks[d].logInOuts[2].logOut}}</td>
+          <td>{{this.timesheetHours[i].totalHoursWorked[d]}}</td>
+        </tr>
+      </ng-template>
+      <tr class="row-total">
+        <td>Total</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{this.timesheetHours[i].totalHoursWorked[7]}}</td>
+      </tr>
+    </table>
+  </ng-template>
+  </div>
+</div>

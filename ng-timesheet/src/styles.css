@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  /* background-color: rgb(235, 232, 232); */
+  background-color: rgb(60, 60, 60);
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: auto;
+}
+
+.img-storm {
+  opacity: 0.5;
+  height: auto;
+  width: 100%
+}
