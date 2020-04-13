@@ -12,6 +12,7 @@ Angular front-end
 
 # Skillstorm-Timesheet
 backend for react-timesheet and ng-timesheet
+Used Spring Boot, JPA, MVC
 
 
 
