@@ -45,15 +45,15 @@ public class Email
         emailProperties.put("mail.smtp.starttls.enable", "true");
         mailSession = Session.getDefaultInstance(emailProperties, null);
         
-        emailTo = "mstevenson36@hotmail.com";
-        emailSenderName = "Michael Stevenson";
+        emailTo = "email@example.com";
+        emailSenderName = "John Smith";
         emailSubject = "Time Sheet week ending " + weekEndingDate;
         emailBody = "";
-        fromUserEmailAccountName = "mikestuartstevenson@gmail.com";
-        fromUserEmailPassword = "grjw miuc uhnx dloq";
+        fromUserEmailAccountName = "email@example.com";
+        fromUserEmailPassword = "password";
         emailHost = "smtp.gmail.com";
         
-        fileName = "C:\\Users\\mstev\\Desktop\\Timesheet.xlsx";
+        fileName = "Timesheet.xlsx";
     }
  
     // Draft an email with just text
